@@ -20,14 +20,11 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        if(playerInteract.interactState == PlayerInteract.InteractState.NONE)
+        if(playerInteract.interactState != PlayerInteract.InteractState.NONE)
         {
-
+            return ;
         }
-    }
 
-    void InteractObject()
-    {
 
     }
 }

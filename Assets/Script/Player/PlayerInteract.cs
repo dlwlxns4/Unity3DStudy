@@ -11,10 +11,10 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField]
     GameObject interactInfoPanel;
     public InteractState interactState{get; set;}
-
+    PlayerInput playerInput;
     void Start()
     {
-
+        playerInput =GetComponent<PlayerInput>();
     }
 
     void FixedUpdate()
@@ -22,6 +22,10 @@ public class PlayerInteract : MonoBehaviour
         DetectNPC();
     }
 
+    void Update()
+    {
+        InteractNPC();
+    }
     void DetectNPC()
     {
         int npcCount = Physics.OverlapSphereNonAlloc(transform.position, 1f, npcCollider, 1 << 6);
@@ -34,6 +38,21 @@ public class PlayerInteract : MonoBehaviour
         {
             interactInfoPanel.SetActive(false);
             interactState = InteractState.NONE;
+        }
+    }
+
+    void InteractNPC()
+    {
+        if(interactState != InteractState.DETECTNPC)
+        {
+            return ;
+        }
+
+        if(playerInput.attackInput==true)
+        {
+            Debug.Log("Conservation!!");
+            npcCollider[0].gameObject.GetComponent<InteractableObj>()?.Interact(transform.position);
+            transform.LookAt(npcCollider[0].transform.position);
         }
     }
 }
